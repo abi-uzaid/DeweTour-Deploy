@@ -7,7 +7,7 @@ type Transaction struct {
 	CounterQty int                  `json:"counter_qty" gorm:"type int"`
 	Total      int                  `json:"total" gorm:"type int"`
 	Status     string               `json:"status" gorm:"type varchar(255)"`
-	TripId     int                  `json:"trip_id" form:"tripid"`
+	TripId     int                  `json:"trip_id"`
 	Trip       TripResponse         `json:"trip"`
 	UserID     int                  `json:"user_id"`
 	User       UsersProfileResponse `json:"user"`

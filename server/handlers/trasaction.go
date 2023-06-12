@@ -47,6 +47,9 @@ func (h *HandleTransaction) CreateTransaction(c *gin.Context) {
 
 	userLogin := c.MustGet("userLogin")
 	userId := userLogin.(jwt.MapClaims)["id"].(float64)
+	if err := c.Bind(request); err != nil {
+		c.JSON(http.StatusBadRequest, resultdto.ErrorResult{Status: http.StatusBadRequest, Message: err.Error()})
+	}
 
 	validation := validator.New()
 	err := validation.Struct(request)
