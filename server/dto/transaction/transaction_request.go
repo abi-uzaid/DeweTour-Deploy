@@ -2,7 +2,7 @@ package transactiondto
 
 import "dewetour/models"
 
-type createTransactionRequest struct {
+type CreateTransactionRequest struct {
 	ID         int         `json:"id"`
 	CounterQty int         `json:"counter_qty" validate:"required" `
 	Total      int         `json:"total" validate:"required" `

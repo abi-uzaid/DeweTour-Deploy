@@ -43,22 +43,10 @@ func (h *HandleTransaction) GetTransaction(c *gin.Context) {
 }
 
 func (h *HandleTransaction) CreateTransaction(c *gin.Context) {
+	request := new(transactiondto.CreateTransactionRequest)
 
 	userLogin := c.MustGet("userLogin")
 	userId := userLogin.(jwt.MapClaims)["id"].(float64)
-
-	counter_qty, _ := strconv.Atoi(c.PostForm("counter_qty"))
-	total, _ := strconv.Atoi(c.PostForm("total"))
-	trip_id, _ := strconv.Atoi(c.PostForm("trip_id"))
-
-	request := transactiondto.TransactionResponse{
-
-		CounterQty: counter_qty,
-		Total:      total,
-		Status:     "Pending",
-		TripID:     trip_id,
-		UserID:     int(userId),
-	}
 
 	validation := validator.New()
 	err := validation.Struct(request)
@@ -66,16 +54,6 @@ func (h *HandleTransaction) CreateTransaction(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	tripID, err := h.TripRepository.GetTrip(request.TripID)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, resultdto.ErrorResult{
-			Status:  http.StatusInternalServerError,
-			Message: err.Error(),
-		})
-
-	}
-	user, _ := h.userRepository.GetUser(request.UserID)
 
 	var transactionIsMatch = false
 	var transactionId int
@@ -91,11 +69,9 @@ func (h *HandleTransaction) CreateTransaction(c *gin.Context) {
 		ID:         transactionId,
 		CounterQty: request.CounterQty,
 		Total:      request.Total,
-		Status:     request.Status,
+		Status:     "pending",
 		TripId:     request.TripID,
-		Trip:       CovertTripResponse(tripID),
-		UserID:     request.UserID,
-		User:       ConvertResponseUser(user),
+		UserID:     int(userId),
 	}
 
 	data, err := h.TransactionRepository.CreateTransaction(transaction)
