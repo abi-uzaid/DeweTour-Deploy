@@ -6,9 +6,7 @@ import { useQuery } from "react-query";
 import { API } from "../config/api";
 
 const Cards = ({ data, search }) => {
-  console.log(data, "ini data kontol doni ");
-  // console.log(search, "ini search ");
-
+ 
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
