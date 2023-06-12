@@ -4,7 +4,7 @@ type Trip struct {
 	ID             int             `json:"id"`
 	Title          string          `json:"title" binding:"required" gorm:"varchar(255)"`
 	CountryId      int             `json:"country_id" binding:"required"`
-	Country        CountryResponse `json:"country" gorm:"foreignKey: CountryId"`
+	Country        CountryResponse `json:"country"`
 	Accomodation   string          `json:"accomodation" binding:"required" gorm:"varchar(255)"`
 	Transportation string          `json:"transportation" binding:"required" gorm:"varchar(255)"`
 	Eat            string          `json:"eat" gorm:"varchar(255)"`
@@ -20,7 +20,7 @@ type Trip struct {
 type TripResponse struct {
 	ID             int             `json:"id"`
 	Title          string          `json:"title"`
-	CountryID      int             `json:"-"`
+	CountryID      int             `json:"country_id"`
 	Country        CountryResponse `json:"country"`
 	Accomodation   string          `json:"accomodation"`
 	Transportation string          `json:"transportation"`
