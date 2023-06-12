@@ -52,12 +52,10 @@ func (h *HandleTransaction) CreateTransaction(c *gin.Context) {
 	tripid, _ := strconv.Atoi(c.PostForm("trip_id"))
 
 	request := transactiondto.TransactionResponse{
-		Name:       c.PostForm("name"),
-		Gender:     c.PostForm("gender"),
-		Phone:      c.PostForm("phone"),
+
 		CounterQty: counterqty,
 		Total:      total,
-		Status:     c.PostForm("status"),
+		Status:     "Pending",
 		TripID:     tripid,
 		UserID:     int(userId),
 	}
