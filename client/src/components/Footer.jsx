@@ -22,7 +22,7 @@ function Footer() {
         }}
         className="text-center"
       >
-        Copyright @ 2020 Dewe Tour - Your Name - NIS. All Rights reserved
+        Copyright @ 2023 DeweTour - Abi Uzaid - DumbWays. All Rights reserved
       </p>
     </div>
   );
