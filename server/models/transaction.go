@@ -4,10 +4,10 @@ import "time"
 
 type Transaction struct {
 	ID         int                  `json:"id"`
-	CounterQty int                  `json:"counter_Qty" gorm:"type int"`
+	CounterQty int                  `json:"counter_qty" gorm:"type int"`
 	Total      int                  `json:"total" gorm:"type int"`
 	Status     string               `json:"status" gorm:"type varchar(255)"`
-	TripId     int                  `json:"tripid" form:"tripid"`
+	TripId     int                  `json:"trip_id" form:"tripid"`
 	Trip       TripResponse         `json:"trip"`
 	UserID     int                  `json:"user_id"`
 	User       UsersProfileResponse `json:"user"`
@@ -17,10 +17,10 @@ type Transaction struct {
 
 type TransactionResponse struct {
 	ID         int    `json:"id"`
-	CounterQty int    `json:"counter_Qty"`
+	CounterQty int    `json:"counter_qty"`
 	Total      int    `json:"total"`
 	Status     string `json:"status"`
-	UserID     int    `json:"-"`
+	UserID     int    `json:"user_id"`
 }
 
 func (TransactionResponse) TableName() string {
