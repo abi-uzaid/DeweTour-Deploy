@@ -337,7 +337,6 @@ function AddTrip() {
                     height:"40px",
                     marginLeft: "170px"
                   }}
-                  type="submit"
                 >
                   Add Trip
                 </Button>
