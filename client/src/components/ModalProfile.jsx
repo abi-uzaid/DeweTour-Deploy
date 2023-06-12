@@ -55,8 +55,7 @@ export const ModalProfile = (props) => {
 
   const handleSubmit = useMutation(async (e) => {
     try {
-      e.preventDefault();
-
+      // e.preventDefault();
       
       const config = {
         headers: {
@@ -130,7 +129,7 @@ export const ModalProfile = (props) => {
                 className="p-2 mb-3"
                 onChange={handleChange}
                 name="fullname"
-                value={updateProfile?.fullname}
+                value={updateProfile.fullname}
                 type="text"
               />
               <Form.Label className="fw-bold">Email</Form.Label>
@@ -147,14 +146,14 @@ export const ModalProfile = (props) => {
                 type="password"
                 onChange={handleChange}
                 name="password"
-                value={updateProfile?.password}
+                value={updateProfile.password}
               />
               <Form.Label className="fw-bold">Phone</Form.Label>
               <Form.Control
                 className="p-2 mb-3"
                 onChange={handleChange}
                 name="phone"
-                value={updateProfile?.phone}
+                value={updateProfile.phone}
                 type="number"
               />
               <Form.Label className="fw-bold">Address</Form.Label>
@@ -163,7 +162,7 @@ export const ModalProfile = (props) => {
                 as="textarea"
                 onChange={handleChange}
                 name="address"
-                value={updateProfile?.address}
+                value={updateProfile.address}
                 style={{
                   height: "100px",
                   resize: "none",
