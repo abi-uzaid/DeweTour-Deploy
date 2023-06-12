@@ -47,16 +47,16 @@ func (h *HandleTransaction) CreateTransaction(c *gin.Context) {
 	userLogin := c.MustGet("userLogin")
 	userId := userLogin.(jwt.MapClaims)["id"].(float64)
 
-	counterqty, _ := strconv.Atoi(c.PostForm("counter_qty"))
+	counter_qty, _ := strconv.Atoi(c.PostForm("counter_qty"))
 	total, _ := strconv.Atoi(c.PostForm("total"))
-	tripid, _ := strconv.Atoi(c.PostForm("trip_id"))
+	trip_id, _ := strconv.Atoi(c.PostForm("trip_id"))
 
 	request := transactiondto.TransactionResponse{
 
-		CounterQty: counterqty,
+		CounterQty: counter_qty,
 		Total:      total,
 		Status:     "Pending",
-		TripID:     tripid,
+		TripID:     trip_id,
 		UserID:     int(userId),
 	}
 
