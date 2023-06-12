@@ -55,7 +55,7 @@ export const ModalProfile = (props) => {
 
   const handleSubmit = useMutation(async (e) => {
     try {
-      // e.preventDefault();
+      e.preventDefault();
       
       const config = {
         headers: {
@@ -98,6 +98,11 @@ export const ModalProfile = (props) => {
     }
     props.onHide();
   });
+
+  useEffect(() => {
+    setUpdateProfile();
+    setImageUrl();
+  }, []);
 
   return (
     <>
