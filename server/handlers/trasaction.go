@@ -51,12 +51,12 @@ func (h *HandleTransaction) CreateTransaction(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, resultdto.ErrorResult{Status: http.StatusBadRequest, Message: err.Error()})
 	}
 
-	validation := validator.New()
-	err := validation.Struct(request)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+	// validation := validator.New()
+	// err := validation.Struct(request)
+	// if err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
 
 	var transactionIsMatch = false
 	var transactionId int
