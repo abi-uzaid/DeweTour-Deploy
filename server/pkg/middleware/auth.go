@@ -28,11 +28,11 @@ func Auth(next gin.HandlerFunc) gin.HandlerFunc {
 		claims, err := jwtToken.DecodeToken(token)
 
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "unauthorized 2"})
+			c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "unathorized 2"})
 			return
 		}
 
 		c.Set("userLogin", claims)
-		next(c) 
+		next(c) // agar bisa di teruskan ke handler selanjutnya
 	}
 }

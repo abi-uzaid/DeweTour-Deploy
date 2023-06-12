@@ -35,6 +35,8 @@ func UploadFile(next gin.HandlerFunc) gin.HandlerFunc {
 		}
 		data := tempFile.Name()
 
+		// update := strings.Split(data, "\\")[1]
+		// fmt.Println(update)
 
 		c.Set("dataFile", data)
 		next(c)

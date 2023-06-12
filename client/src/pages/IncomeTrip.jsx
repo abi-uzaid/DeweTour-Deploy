@@ -1,25 +1,14 @@
+/** @format */
+
 import Navbars from "../components/Navbar";
 import Footer from "../components/Footer";
-import Cards from "../components/Card";
-import { Button, Container } from "react-bootstrap";
+import { useQuery } from "react-query";
 import { API } from "../config/api";
 import { useState } from "react";
-import { useQuery } from "react-query";
-
-
-export default function IncomeTrip() {
+import Cards from "../components/Card2";
+import { Button, Container } from "react-bootstrap";
+function IncomeTrip() {
   document.title = "IncomeTrip | DeweTour";
-  const [search, setSearch] = useState("");
-  const [data, setData] = useState();
-
-  let { data: trips } = useQuery("tripsCache", async () => {
-    const response = await API.get("/trips");
-    setData(response.data.data);
-  });
-
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
   return (
     <>
       <Navbars />
@@ -40,10 +29,11 @@ export default function IncomeTrip() {
           </div>
         </div>
         <div className="mx-3">
-        <Cards data={data} search={search} />
+          <Cards />
         </div>
       </Container>
       <Footer />
     </>
   );
 }
+export default IncomeTrip;

@@ -1,3 +1,7 @@
+/** @format */
+
+/** @format */
+
 import { Button, Modal, Form } from "react-bootstrap";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
@@ -17,7 +21,6 @@ export const ModalProfile = (props) => {
     address: "",
     image: "",
   });
-  
 
   async function getDataUpdateProfile() {
     const responseProfile = await API.get("/user");
@@ -46,7 +49,7 @@ export const ModalProfile = (props) => {
         e.target.type === "file" ? e.target.files : e.target.value,
     });
 
-    
+    // Create image url for preview
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0]);
       setImageUrl(url);
@@ -56,14 +59,15 @@ export const ModalProfile = (props) => {
   const handleSubmit = useMutation(async (e) => {
     try {
       e.preventDefault();
-      
+
+      // Configuration
       const config = {
         headers: {
           "Content-type": "multipart/form-data",
         },
       };
 
-      
+      // Store data with FormData as object
       const formData = new FormData();
       formData.set(
         "image",
@@ -76,9 +80,9 @@ export const ModalProfile = (props) => {
       formData.set("phone", updateProfile.phone);
       formData.set("address", updateProfile.address);
 
-     
+      // await disini berfungsi untuk menunggu sampai promise tersebut selesai dan mengembalikkan hasilnya
       const response = await API.patch("/user", formData, config);
-      
+      console.log(response.data);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -88,18 +92,10 @@ export const ModalProfile = (props) => {
       });
       navigate("/Profile");
     } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Update user Failed",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      console.log(error);
     }
     props.onHide();
   });
-
-  
 
   return (
     <>
@@ -139,7 +135,7 @@ export const ModalProfile = (props) => {
                 className="p-2 mb-3"
                 onChange={handleChange}
                 name="email"
-                value={updateProfile?.email}
+                value={updateProfile.email}
                 type="email"
               />
               <Form.Label className="fw-bold">Password</Form.Label>

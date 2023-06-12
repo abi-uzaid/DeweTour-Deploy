@@ -1,3 +1,5 @@
+/** @format */
+
 import { Button, Modal, Form } from "react-bootstrap";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
@@ -31,7 +33,7 @@ export const Register = (props) => {
 
       const response = await API.post("/register", formRegister);
 
-      
+      console.log("register success : ", response);
 
       Swal.fire({
         position: "center",
@@ -55,12 +57,17 @@ export const Register = (props) => {
         showConfirmButton: false,
         timer: 1500,
       });
-      
+      console.log("register failed : ", error);
     }
     props.onHide();
   });
 
-
+  // const handleRegister = () => {
+  //   let users = JSON.parse(localStorage.getItem("users")) || [];
+  //   users.push(user);
+  //   localStorage.setItem("users", JSON.stringify(users));
+  //   props.onHide(true);
+  // };
 
   return (
     <>

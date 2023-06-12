@@ -1,12 +1,13 @@
+/** @format */
+
 import Navbar from "../components/Navbar";
+import { useState } from "react";
 import Jumbotron from "../components/Jumbotron";
 import Footer from "../components/Footer";
 import Cards from "../components/Card";
-import { useState } from "react";
-import { API } from "../config/api";
 import { useQuery } from "react-query";
-
-export default function Home() {
+import { API } from "../config/api";
+function Home() {
   document.title = "DeweTour | Home";
   const [search, setSearch] = useState("");
   const [data, setData] = useState();
@@ -19,6 +20,8 @@ export default function Home() {
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
+
+  console.log(trips);
   return (
     <>
       <Navbar />
@@ -28,3 +31,4 @@ export default function Home() {
     </>
   );
 }
+export default Home;

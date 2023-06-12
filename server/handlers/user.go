@@ -4,9 +4,11 @@ import (
 	resultdto "dewetour/dto/result"
 	userdto "dewetour/dto/user"
 	"dewetour/models"
+	"dewetour/pkg/bcrypt"
 	"dewetour/repositories"
 	"fmt"
 	"net/http"
+
 	"os"
 
 	"context"
@@ -24,7 +26,8 @@ type handler struct {
 func HandlerUser(UserRepository repositories.UserRepository) *handler {
 	return &handler{
 		UserRepository:        UserRepository,
-
+		// CartRepository:        CartRepository,
+		// TransactionRepository: TransactionRepository,
 	}
 }
 
@@ -64,7 +67,7 @@ func (h *handler) GetUser(c *gin.Context) {
 
 func (h *handler) UpdateUser(c *gin.Context){
 	dataFile := c.MustGet("dataFile").(string)
-	
+		fmt.Println("this is data file", dataFile)
 	userLogin := c.MustGet("userLogin")
 	userId := userLogin.(jwt.MapClaims)["id"].(float64)
 	
@@ -83,22 +86,28 @@ func (h *handler) UpdateUser(c *gin.Context){
 		}
 		
 		user, err := h.UserRepository.GetUser(int(userId))
-		
+		fmt.Println(user, "inini tood")
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, resultdto.ErrorResult{Status: http.StatusBadRequest, Message: err.Error()})
 			return
 		}
 
+		password, err := bcrypt.HashingPassword(request.Password)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, resultdto.ErrorResult{Status: http.StatusInternalServerError, Message: err.Error()})
+		return
+	}
+
 		var ctx = context.Background()
 		var CLOUD_NAME = os.Getenv("CLOUD_NAME")
 		var API_KEY = os.Getenv("API_KEY")
 		var API_SECRET = os.Getenv("API_SECRET")
 			
-	
+		// Add your Cloudinary credentials ...
 		cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 	
-		
+		// Upload file to Cloudinary ...
 		resp, err := cld.Upload.Upload(ctx, dataFile, uploader.UploadParams{Folder: "uploads"})
 	
 		if err != nil {
@@ -112,7 +121,7 @@ func (h *handler) UpdateUser(c *gin.Context){
 			user.Email = request.Email
 		}
 		if request.Password != "" {
-			user.Password = request.Password
+			user.Password = password
 		}
 		if request.Phone != "" {
 			user.Phone = request.Phone
@@ -130,7 +139,7 @@ func (h *handler) UpdateUser(c *gin.Context){
 			c.JSON(http.StatusInternalServerError, resultdto.ErrorResult{Status: http.StatusInternalServerError, Message: err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "data sudah berhasil di update",Data: convertResponse(data)})
+		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "data udeh berhasil lu update nyeeet",Data: convertResponse(data)})
 }
 
 

@@ -1,5 +1,6 @@
+/** @format */
 import Navbars from "../components/Navbar";
-import ImgProfile from "../assets/image/Profile.png";
+import ImgProfile from "../assets/image/myProfile.png";
 
 import { Container, Button } from "react-bootstrap";
 import { useContext } from "react";
@@ -21,7 +22,7 @@ function Profile() {
   };
 
   const [state] = useContext(UserContext);
-  
+  console.log(state.user, "nskdkjandnan");
 
   const { data: transactions } = useQuery("transactionCache", async () => {
     const response = await API.get("/transactions");
@@ -118,8 +119,7 @@ function Profile() {
                   <img
                     src={state.user.image ? state.user.image : ImgProfile}
                     alt=""
-                    width="300px"
-                    height="420px"
+                    width="100%"
                   />
                   <Button
                     onClick={handleShowProfile}

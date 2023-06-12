@@ -25,7 +25,7 @@ func HandlerAuth(AuthRepository repositories.AuthRepository) *handlerAuth {
 }
 
 func (h *handlerAuth) Register(c *gin.Context) {
-
+	// c.Header("content-Type", "application/json")
 
 	request := new(authdto.AuthRequset)
 	if err := c.Bind(request); err != nil {
@@ -88,7 +88,7 @@ func(h *handlerAuth) Login(c *gin.Context) {
 	claims := jwt.MapClaims{}
 	claims["id"] = user.ID
 	claims["is_admin"] = user.IsAdmin
-	claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+	claims["exp"] = time.Now().Add(time.Hour * 2).Unix() // 2hours expired
 
 	token, errGenerateToken := jwtToken.GenerateToken(&claims)
 	if errGenerateToken != nil{

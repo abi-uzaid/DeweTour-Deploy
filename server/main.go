@@ -43,4 +43,6 @@ func main() {
 	
 	r.Run(":" + PORT)
 
+	// fmt.Println("Server Started")
+	// http.ListenAndServe("localhost:5000", r)
 }

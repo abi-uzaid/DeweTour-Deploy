@@ -1,3 +1,4 @@
+/** @format */
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { Button, Modal, Form } from "react-bootstrap";
@@ -32,6 +33,7 @@ export const Login = (props) => {
       e.preventDefault();
 
       const response = await API.post("/login", formLogin);
+      console.log("login success : ", response);
 
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -41,7 +43,7 @@ export const Login = (props) => {
       setAuthToken(response.data.data.token);
 
       if (response.data.data.is_admin === true) {
-        navigate("/IncomeTransaction");
+        navigate("/Income");
       } else {
         navigate("/");
       }
@@ -60,11 +62,33 @@ export const Login = (props) => {
         showConfirmButton: false,
         timer: 1500,
       });
+      console.log("login failed : ", error);
     }
     props.onHide();
   });
 
-
+  // const handleLogin = () => {
+  //   let users = JSON.parse(localStorage.getItem("users"));
+  //   let user = users.find(
+  //     (user) => user.email === data.email && user.password === data.password
+  //   );
+  //   if (!user) {
+  //     alert("user not found");
+  //   } else {
+  //     localStorage.setItem("loginUsers", JSON.stringify(user));
+  //     Swal.fire({
+  //       position: "center",
+  //       icon: "success",
+  //       title: "Login success",
+  //       showConfirmButton: true,
+  //     });
+  //     if (user.email === "admin@gmail.com") {
+  //       navigate("/Income");
+  //     } else {
+  //       window.location.reload();
+  //     }
+  //   }
+  // };
 
   return (
     <>

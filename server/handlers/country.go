@@ -5,6 +5,7 @@ import (
 	resultdto "dewetour/dto/result"
 	"dewetour/models"
 	"dewetour/repositories"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -22,41 +23,42 @@ func HandlerCountry(CountryRepository repositories.CountryRepository) *handlerCo
 	return &handlerCountry{CountryRepository}
 }
 
-func (h *handlerCountry) FindCountries(c *gin.Context) {
+func (h *handlerCountry) FindCountries(c *gin.Context){
 	userLogin := c.MustGet("userLogin")
 	userAdmin := userLogin.(jwt.MapClaims)["is_admin"].(bool)
 
 	if userAdmin {
 		countries, err := h.CountryRepository.FindCountries()
-		if err != nil {
+		if  err != nil {
 			c.JSON(http.StatusBadRequest, resultdto.ErrorResult{Status: http.StatusBadRequest, Message: err.Error()})
 		}
 		if len(countries) > 0 {
-			c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "Semua data berhasil ditampilan", Data: countries})
+			c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "Semua data berhasil ditampilan, ok nyeet", Data: countries})
 		} else {
-			c.JSON(http.StatusBadRequest, resultdto.ErrorResult{Status: http.StatusBadRequest, Message: "Data kosong"})
+			c.JSON(http.StatusBadRequest, resultdto.ErrorResult{Status: http.StatusBadRequest, Message: "Data kosong, tambah dulu nyeet"})
 		}
 
 	} else {
-		c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "anda bukan admin"})
+		c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "Lu bukan admin nyeet"})
 		return
 	}
-
+	
 }
-func (h *handlerCountry) GetCountry(c *gin.Context) {
+func (h *handlerCountry) GetCountry(c *gin.Context){
 	id, _ := strconv.Atoi(c.Param("id"))
-
+fmt.Println(id)
+	
 	country, err := h.CountryRepository.GetCountry(id)
-
+	fmt.Println(country)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, resultdto.ErrorResult{Status: http.StatusBadRequest, Message: err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "Country data successfully obtained", Data: country})
+			return
+		}
+		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "Country data successfully obtained", Data: country})
 
-}
+		} 
 
-func (h *handlerCountry) CreateCountry(c *gin.Context) {
+func (h *handlerCountry) CreateCountry(c *gin.Context){
 	userLogin := c.MustGet("userLogin")
 	userAdmin := userLogin.(jwt.MapClaims)["is_admin"].(bool)
 
@@ -86,19 +88,19 @@ func (h *handlerCountry) CreateCountry(c *gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "data sudah ditambah", Data: convertResponseCountry(data)})
+		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "data udah nambah nyeet",Data: convertResponseCountry(data)})
 		return
 
-	} else {
-		c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "anda bukan admin"})
-		return
-	}
+		} else {
+			c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "Lu bukan admin nyeet"})
+			return
+		}
 }
 
-func (h *handlerCountry) UpdateCountry(c *gin.Context) {
+func (h *handlerCountry) UpdateCountry(c *gin.Context){
 	userLogin := c.MustGet("userLogin")
 	userAdmin := userLogin.(jwt.MapClaims)["is_admin"].(bool)
-
+	
 	if userAdmin {
 		request := new(countrydto.UpdateCountryRequset)
 
@@ -127,15 +129,15 @@ func (h *handlerCountry) UpdateCountry(c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, resultdto.ErrorResult{Status: http.StatusInternalServerError, Message: err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "data sudah berhasil diupdate", Data: convertResponseCountry(data)})
+		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "data udeh berhasil lu update nyeeet",Data: convertResponseCountry(data)})
 		return
 
-	} else {
-		c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "anda bukan admin"})
-		return
-	}
+		} else {
+			c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "Lu bukan admin nyeet"})
+			return
+		}
 }
-func (h *handlerCountry) DeleteCountry(c *gin.Context) {
+func (h *handlerCountry) DeleteCountry(c *gin.Context){
 	userLogin := c.MustGet("userLogin")
 	userAdmin := userLogin.(jwt.MapClaims)["is_admin"].(bool)
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -143,10 +145,10 @@ func (h *handlerCountry) DeleteCountry(c *gin.Context) {
 
 	if userAdmin {
 		if err != nil {
-			c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
-				Status:  http.StatusBadRequest,
+			 c.JSON(http.StatusBadRequest, resultdto.ErrorResult{
+				Status:    http.StatusBadRequest,
 				Message: err.Error()})
-			return
+				return
 		}
 
 		data, err := h.CountryRepository.DeleteCountry(country)
@@ -156,18 +158,18 @@ func (h *handlerCountry) DeleteCountry(c *gin.Context) {
 			return
 		}
 
-		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "data sudah terhapus", Data: convertResponseCountry(data)})
+		c.JSON(http.StatusOK, resultdto.SuccessResult{Status: http.StatusOK, Message: "data udeh berhasil lu apus nyet",Data: convertResponseCountry(data)})
 		return
 
-	} else {
-		c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "anda bukan admin"})
-		return
-	}
+		} else {
+			c.JSON(http.StatusUnauthorized, resultdto.ErrorResult{Status: http.StatusUnauthorized, Message: "Lu bukan admin nyeet"})
+			return
+		}
 }
 
-func convertResponseCountry(country models.Country) countrydto.CountryResponse {
+func convertResponseCountry(country models.Country) countrydto.CountryResponse{
 	return countrydto.CountryResponse{
-		ID:   country.ID,
+		ID: country.ID,
 		Name: country.Name,
 	}
 }

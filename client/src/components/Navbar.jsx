@@ -1,14 +1,15 @@
+/** @format */
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Button, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import ImgProfile from "../assets/image/Profile.png";
 import { UserContext } from "../context/userContext";
 import { API, setAuthToken } from "../config/api";
 import ModalLogin from "./ModalLogin";
 import ModalRegister from "./ModalRegister";
 import Swal from "sweetalert2";
+import ImgProfile from "../assets/image/myProfile.png";
 
-export default function Navbars() {
+function Navbars() {
   let navigate = useNavigate();
   const [state, dispatch] = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +32,7 @@ export default function Navbars() {
   };
 
   useEffect(() => {
-   
+    // Redirect auth but just when isLoading is false
     if (!isLoading) {
       if (state.isLogin === false) {
         navigate("/");
@@ -51,16 +52,19 @@ export default function Navbars() {
   const checkUser = async () => {
     try {
       const response = await API.get("/check-auth");
-      
+      console.log("check user success : ", response);
+      // get user data
       let payload = response.data.data;
+      // get token from localstorage
       payload.token = localStorage.token;
+      // send data to useContext
       dispatch({
         type: "USER_SUCCESS",
         payload,
       });
       setIsLoading(false);
     } catch (error) {
-      
+      console.log("check user failed : ", error);
       dispatch({
         type: "AUTH_ERROR",
       });
@@ -69,7 +73,7 @@ export default function Navbars() {
   };
 
   const logout = () => {
-    
+    console.log(state);
     dispatch({
       type: "LOGOUT",
     });
@@ -115,6 +119,9 @@ export default function Navbars() {
                             height: "50px",
                             border: "solid orange",
                           }}
+                          data-aos="flip-left"
+                          data-aos-easing="ease-out-cubic"
+                          data-aos-duration="2000"
                           className="rounded-circle"
                         />
                       }
@@ -163,7 +170,7 @@ export default function Navbars() {
                         />
                         <span className="ms-3 fw-bold">Profile</span>
                       </NavDropdown.Item>
-                      <NavDropdown.Item href="/Payment/:id">
+                      <NavDropdown.Item href="/Payment">
                         <img
                           src="/images/bill.svg"
                           alt=""
@@ -227,3 +234,5 @@ export default function Navbars() {
     </>
   );
 }
+
+export default Navbars;

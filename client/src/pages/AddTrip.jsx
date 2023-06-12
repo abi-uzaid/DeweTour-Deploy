@@ -1,6 +1,8 @@
+/** @format */
+
 import { Container, Form, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQu } from "react-query";
 import { API } from "../config/api";
 import { useNavigate } from "react-router-dom";
 import Navbars from "../components/Navbar";
@@ -29,11 +31,12 @@ function AddTrip() {
       const response = await API.get("/countries");
       setCountry(response.data.data);
     } catch (error) {
-      
+      console.log(error);
     }
   };
 
   const [formAddTrip, setFormAddTrip] = useState({
+    id: 0,
     title: "",
     country_id: "",
     accomodation: "",
@@ -54,7 +57,7 @@ function AddTrip() {
       [e.target.name]:
         e.target.type === "file" ? e.target.files : e.target.value,
     });
-
+    // create image url for preview
     if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0]);
       setImageUrl(url);
@@ -71,7 +74,7 @@ function AddTrip() {
         },
       };
 
-    
+      //store data width FormData as object
       const formData = new FormData();
       formData.set("image", formAddTrip.image[0], formAddTrip.image[0].name);
       formData.set("title", formAddTrip.title);
@@ -86,8 +89,9 @@ function AddTrip() {
       formData.set("quota", Number(formAddTrip.quota));
       formData.set("description", formAddTrip.desc);
 
-    
+      //insert trip data
       const response = await API.post("/trip", formData, config);
+      console.log("add trip success : ", response);
 
       navigate("/IncomeTrip");
       Swal.fire({
@@ -105,7 +109,7 @@ function AddTrip() {
         showConfirmButton: false,
         timer: 1500,
       });
-      
+      console.log("add trip failed : ", error);
     }
   });
 
@@ -120,6 +124,14 @@ function AddTrip() {
       <Container>
         <div className="d-flex justify-content-between">
           <h1 className="fw-bold my-5">Add Trip</h1>
+          <div className="d-flex align-items-center">
+            <Button
+              style={{ backgroundColor: "#FFAF00", border: "none" }}
+              onClick={handleAddCountry}
+            >
+              ADD COUNTRY
+            </Button>
+          </div>
         </div>
         <div className="mx-5">
           <Form onSubmit={(e) => submitAddTrip.mutate(e)}>
@@ -139,37 +151,23 @@ function AddTrip() {
 
             <Form.Group className="mb-5" controlId="formBasicPassword">
               <Form.Label className="fw-bold">Country</Form.Label>
-              <div className="d-flex align-items-center">
-                <Form.Select
-                  style={{
-                    border: "2px solid #B1B1B1",
-                    backgroundColor: "#DBDBDB",
-                  }}
-                  onChange={handleChange}
-                  name="country_id"
-                >
-                  <option>Select Country</option>
-                  {country.map((item, index) => {
-                    return (
-                      <option value={item.id} key={index}>
-                        {item.name}
-                      </option>
-                    );
-                  })}
-                </Form.Select>
-                <Button
-                  style={{
-                    backgroundColor: "#FFAF00",
-                    border: "none",
-                    width: "190px",
-                    height: "40px",
-                    marginLeft: "10px",
-                  }}
-                  onClick={handleAddCountry}
-                >
-                  ADD COUNTRY
-                </Button>
-              </div>
+              <Form.Select
+                style={{
+                  border: "2px solid #B1B1B1",
+                  backgroundColor: "#DBDBDB",
+                }}
+                onChange={handleChange}
+                name="country_id"
+              >
+                <option>Select Country</option>
+                {country.map((item, index) => {
+                  return (
+                    <option value={item.id} key={index}>
+                      {item.name}
+                    </option>
+                  );
+                })}
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-5" controlId="formBasicPassword">
               <Form.Label className="fw-bold">Accomodation</Form.Label>
@@ -321,26 +319,20 @@ function AddTrip() {
                 </div>
               </Form.Label>
             </Form.Group>
-            <div style={{ display: "flex" }}>
-              <img
-                src={imageUrl}
-                alt="preview"
-                style={{ width: "320px", height: "280px" }}
-              />
-              <div className="justify-content-center d-flex">
-                <Button
-                  style={{
-                    backgroundColor: "#FFAF00",
-                    border: "none",
-                    padding: "5px 50px",
-                    width: "160px",
-                    height:"40px",
-                    marginLeft: "170px"
-                  }}
-                >
-                  Add Trip
-                </Button>
-              </div>
+            <div style={{ width: "100px" }}>
+              <img src={imageUrl} alt="preview" style={{ width: "100%" }} />
+            </div>
+            <div className="justify-content-center d-flex">
+              <Button
+                style={{
+                  backgroundColor: "#FFAF00",
+                  border: "none",
+                  padding: "5px 50px",
+                }}
+                type="submit"
+              >
+                Add Trip
+              </Button>
             </div>
           </Form>
         </div>

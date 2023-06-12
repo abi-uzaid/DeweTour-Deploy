@@ -1,16 +1,20 @@
+/** @format */
+
 import Card from "react-bootstrap/Card";
-import { Container, NavLink } from "react-bootstrap";
-import { API } from "../config/api";
+import { NavLink } from "react-bootstrap";
 import { useQuery } from "react-query";
+import { API } from "../config/api";
 
 const Cards = ({ data, search }) => {
+  console.log(data, "ini data kontol doni ");
+  // console.log(search, "ini search ");
+
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
     }).format(number);
   };
-
   return (
     <>
       {data?.length !== 0 ? (
@@ -35,6 +39,12 @@ const Cards = ({ data, search }) => {
                   .includes(search.toLocaleLowerCase())
               ) {
                 return itemSearch;
+              } else if (
+                itemSearch.title
+                  .toLowerCase()
+                  .includes(search.toLocaleLowerCase())
+              ) {
+                return itemSearch;
               }
             })
             .map((trip, i) => {
@@ -48,16 +58,36 @@ const Cards = ({ data, search }) => {
                   }}
                 >
                   <NavLink href={`/Detail/${trip?.id}`}>
-                    <Card.Img variant="top" src={trip?.image} style={{height: "260px", width: "280px"}}/>
+                    <p
+                      className="text-decoration-none"
+                      style={{
+                        marginLeft: "290px",
+                        marginTop: "30px",
+                        position: "absolute",
+                        background: "white",
+                        borderRadius: "5px 0 0 5px",
+                        textAlign: "center",
+                        width: "50px",
+                        height: "30px",
+                      }}
+                    >
+                      {item.quota}
+                    </p>
+                    <Card.Img
+                      variant="top"
+                      src={trip?.image}
+                      width="100px"
+                      height="200px"
+                    />
                     <Card.Body>
-                      <Card.Title style={{fontSize: "24px", fontWeight:"bolder" }}>{trip?.title}</Card.Title>
-                      <div className="d-flex my-0">
+                      <Card.Title>{trip?.title}</Card.Title>
+                      <div className="d-flex" style={{ marginBottom: "-20px" }}>
                         <Card.Text style={{ color: "#FFAF00" }}>
                           {rupiah(trip?.price)}
                         </Card.Text>
                         <Card.Text
                           className="ms-auto"
-                          style={{ color: "#878787", fontSize: "14px", fontStyle:"italic" }}
+                          style={{ color: "#878787" }}
                         >
                           {trip?.country.name}
                         </Card.Text>

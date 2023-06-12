@@ -1,4 +1,6 @@
-export default function Footer() {
+/** @format */
+
+function Footer() {
   return (
     <div>
       <div>
@@ -8,7 +10,7 @@ export default function Footer() {
           style={{
             position: "relative",
             top: "25px",
-            left: "1225px",
+            left: "1139px",
           }}
         />
       </div>
@@ -20,9 +22,10 @@ export default function Footer() {
         }}
         className="text-center"
       >
-        Copyright @ 2020 Dewe Tour - Abi uzaid - Batch46. All Rights reserved
+        Copyright @ 2020 Dewe Tour - Your Name - NIS. All Rights reserved
       </p>
     </div>
   );
 }
 
+export default Footer;

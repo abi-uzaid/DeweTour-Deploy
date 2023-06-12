@@ -1,3 +1,4 @@
+/** @format */
 import { Modal, Button, Form, NavLink } from "react-bootstrap";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -23,7 +24,7 @@ export const Country = (props) => {
       e.preventDefault();
 
       const response = await API.post("/country", formCountry);
-      
+      console.log("add country success : ", response);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -42,7 +43,7 @@ export const Country = (props) => {
         showConfirmButton: false,
         timer: 1500,
       });
-      
+      console.log("Add country failed : ", error);
     }
     props.onHide();
   });
