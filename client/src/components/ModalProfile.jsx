@@ -21,17 +21,17 @@ export const ModalProfile = (props) => {
 
   async function getDataUpdateProfile() {
     const responseProfile = await API.get("/user");
-    if (responseProfile?.data?.data?.image !== "") {
-      setImageUrl(responseProfile?.data?.data?.image);
+    if (responseProfile.data.data.image !== "") {
+      setImageUrl(responseProfile.data.data.image);
     }
 
     setUpdateProfile({
       ...updateProfile,
-      fullname: responseProfile?.data?.data?.fullname,
-      email: responseProfile?.data?.data?.email,
-      password: responseProfile?.data?.data?.password,
-      phone: responseProfile?.data?.data?.phone,
-      address: responseProfile?.data?.data?.address,
+      fullname: responseProfile.data.data.fullname,
+      email: responseProfile.data.data.email,
+      password: responseProfile.data.data.password,
+      phone: responseProfile.data.data.phone,
+      address: responseProfile.data.data.address,
     });
   }
 
