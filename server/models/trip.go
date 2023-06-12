@@ -2,19 +2,19 @@ package models
 
 type Trip struct {
 	ID             int             `json:"id"`
-	Title          string          `json:"title" form:"title" validate:"required" gorm:"varchar(255)"`
-	CountryId      int             `json:"country_id" validate:"required" form:"country_id"`
-	Country        CountryResponse `json:"country" form:"country" gorm:"foreignKey: CountryId"`
-	Accomodation   string          `json:"accomodation" form:"accomodation" validate:"required" gorm:"varchar(255)"`
-	Transportation string          `json:"transportation" form:"transportation" validate:"required" gorm:"varchar(255)"`
-	Eat            string          `json:"eat" form:"eat" gorm:"varchar(255)"`
-	Day            int             `json:"day" form:"day" validate:"required" gorm:"varchar(255)"`
-	Night          int             `json:"night" form:"night" validate:"required"`
-	DateTrip       string          `json:"date_trip" form:"date_trip" validate:"required"`
-	Price          int             `json:"price" form:"price" validate:"required"`
-	Quota          int             `json:"quota" form:"quota" validate:"required"`
-	Description    string          `json:"description" form:"description" validate:"required"`
-	Image          string          `json:"image" form:"image" validate:"required" gorm:"varchar(255)"`
+	Title          string          `json:"title" binding:"required" gorm:"varchar(255)"`
+	CountryId      int             `json:"country_id" binding:"required"`
+	Country        CountryResponse `json:"country" gorm:"foreignKey: CountryId"`
+	Accomodation   string          `json:"accomodation" binding:"required" gorm:"varchar(255)"`
+	Transportation string          `json:"transportation" binding:"required" gorm:"varchar(255)"`
+	Eat            string          `json:"eat" gorm:"varchar(255)"`
+	Day            int             `json:"day" binding:"required" gorm:"varchar(255)"`
+	Night          int             `json:"night" binding:"required"`
+	DateTrip       string          `json:"date_trip" binding:"required"`
+	Price          int             `json:"price" binding:"required"`
+	Quota          int             `json:"quota" binding:"required"`
+	Description    string          `json:"description" binding:"required"`
+	Image          string          `json:"image" binding:"required" gorm:"varchar(255)"`
 }
 
 type TripResponse struct {
