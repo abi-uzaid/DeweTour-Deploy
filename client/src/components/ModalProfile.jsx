@@ -91,7 +91,7 @@ export const ModalProfile = (props) => {
         timer: 1500,
       });
       navigate("/Profile");
-      window.location.preload()
+      window.location.reload()
     } catch (error) {
       console.log(error);
     }
