@@ -1,5 +1,3 @@
-/** @format */
-
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Container, Table } from "react-bootstrap";
@@ -9,14 +7,13 @@ import { useQuery } from "react-query";
 import { API } from "../config/api";
 
 function Income() {
-  document.title = "Income | DeweTour";
+  document.title = "DeweTour | Income";
 
   const { data: transactions } = useQuery("transactionChace", async () => {
     const res = await API.get("/transactions");
     return res.data.data;
   });
 
-  console.log(transactions, "ini asuuu");
 
   const [showApprove, setShowApprove] = useState(false);
 

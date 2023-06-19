@@ -1,4 +1,3 @@
-/** @format */
 import Navbars from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Button, Form, NavLink } from "react-bootstrap";
@@ -12,7 +11,7 @@ import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "react-query";
 
 const Detail = () => {
-  document.title = "Detail | DeweTour";
+  document.title = "DeweTour| Detail";
   const rupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",

@@ -1,5 +1,3 @@
-/** @format */
-
 import Navbars from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useQuery } from "react-query";
@@ -8,7 +6,7 @@ import { useState } from "react";
 import Cards from "../components/Card2";
 import { Button, Container } from "react-bootstrap";
 function IncomeTrip() {
-  document.title = "IncomeTrip | DeweTour";
+  document.title = "DeweTour| IncomeTrip";
   return (
     <>
       <Navbars />

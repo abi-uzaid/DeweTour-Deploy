@@ -69,7 +69,7 @@ const Cards = ({ data, search }) => {
                         height: "30px",
                       }}
                     >
-                      {item?.quota}
+                      {/* {item.quota} */}
                     </p>
                     <Card.Img
                       variant="top"

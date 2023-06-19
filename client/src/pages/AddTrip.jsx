@@ -1,5 +1,3 @@
-/** @format */
-
 import { Container, Form, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useMutation, useQu } from "react-query";
@@ -10,7 +8,7 @@ import ModalCountry from "../components/ModalCountry";
 import Swal from "sweetalert2";
 import Footer from "../components/Footer";
 function AddTrip() {
-  document.title = "AddTrip | DeweTour";
+  document.title = "DeweTour | AddTrip";
 
   const navigate = useNavigate();
   const [imageUrl, setImageUrl] = useState("/images/placeholder.webp");
