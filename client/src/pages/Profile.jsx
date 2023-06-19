@@ -119,7 +119,7 @@ function Profile() {
                   <img
                     src={state.user.image ? state.user.image : ImgProfile}
                     alt=""
-                    width="100%"
+                    width="300px" height="390px"
                   />
                   <Button
                     onClick={handleShowProfile}
